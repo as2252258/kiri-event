@@ -29,9 +29,6 @@ class EventDispatch extends BaseObject implements EventDispatcherInterface
 	{
 		$lists = $this->eventProvider->getListenersForEvent($event);
 		foreach ($lists as $listener) {
-			if (is_array($listener) && is_string($listener[0])) {
-				$listener[0] = \di(listener[0]);
-			}
 			/** @var Struct $list */
 			$listener($event);
 			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {

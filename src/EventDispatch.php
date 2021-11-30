@@ -2,7 +2,7 @@
 
 namespace Kiri\Events;
 
-use Annotation\Inject;
+use Note\Inject;
 use Kiri\Abstracts\BaseObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;

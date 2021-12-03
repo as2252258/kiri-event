@@ -2,8 +2,8 @@
 
 namespace Kiri\Events;
 
+use Kiri\Abstracts\Component;
 use Note\Inject;
-use Kiri\Abstracts\BaseObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
@@ -11,7 +11,7 @@ use Psr\EventDispatcher\StoppableEventInterface;
 /**
  *
  */
-class EventDispatch extends BaseObject implements EventDispatcherInterface
+class EventDispatch extends Component implements EventDispatcherInterface
 {
 
 	/**

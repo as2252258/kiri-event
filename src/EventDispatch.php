@@ -3,7 +3,7 @@
 namespace Kiri\Events;
 
 use Kiri\Abstracts\Component;
-use Note\Inject;
+use Kiri\Kiri;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
@@ -14,20 +14,15 @@ use Psr\EventDispatcher\StoppableEventInterface;
 class EventDispatch extends Component implements EventDispatcherInterface
 {
 
-	/**
-	 * @var EventProvider
-	 */
-	#[Inject(EventProvider::class)]
-	public EventProvider $eventProvider;
-
 
 	/**
 	 * @param object $event
 	 * @return object
+	 * @throws \ReflectionException
 	 */
 	public function dispatch(object $event): object
 	{
-		$lists = $this->eventProvider->getListenersForEvent($event);
+		$lists = $this->provider()->getListenersForEvent($event);
 		foreach ($lists as $listener) {
 			/** @var Struct $list */
 			$listener($event);
@@ -38,5 +33,14 @@ class EventDispatch extends Component implements EventDispatcherInterface
 		return $event;
 	}
 
+
+	/**
+	 * @return EventProvider
+	 * @throws \ReflectionException
+	 */
+	private function provider(): EventProvider
+	{
+		return Kiri::getDi()->get(EventProvider::class);
+	}
 
 }

@@ -22,7 +22,7 @@ class EventDispatch extends Component implements EventDispatcherInterface
 	 */
 	public function dispatch(object $event): object
 	{
-		$lists = $this->provider()->getListenersForEvent($event);
+		$lists = $this->eventProvider->getListenersForEvent($event);
 		foreach ($lists as $listener) {
 			/** @var Struct $list */
 			$listener($event);
@@ -33,14 +33,5 @@ class EventDispatch extends Component implements EventDispatcherInterface
 		return $event;
 	}
 
-
-	/**
-	 * @return EventProvider
-	 * @throws \ReflectionException
-	 */
-	private function provider(): EventProvider
-	{
-		return Kiri::getDi()->get(EventProvider::class);
-	}
 
 }

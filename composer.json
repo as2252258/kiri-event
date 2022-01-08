@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Kiri\\Events\\": "src/"
+      "Kiri\\Events\\": "./"
      }
   },
   "require-dev": {

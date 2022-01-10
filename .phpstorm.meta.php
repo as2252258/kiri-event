@@ -3,7 +3,7 @@
 namespace PHPSTORM_META {
 
     // Reflect
-	use Http\Context\Context;
+	use Kiri\Message\Context\Context;
 	use Kiri\Di\Container;
 
 	override(Container::get(0), map('@'));

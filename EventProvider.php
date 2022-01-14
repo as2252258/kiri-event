@@ -41,4 +41,19 @@ class EventProvider implements ListenerProviderInterface
 	}
 
 
+	/**
+	 * @param string $event
+	 * @param callable $handler
+	 * @return void
+	 */
+	public function off(string $event, callable $handler)
+	{
+		$events = $this->_listeners[$event] ?? [];
+
+		$this->_listeners[$event] = array_filter($events, function ($value) use ($handler) {
+			return $value->listener !== $handler;
+		});
+	}
+
+
 }

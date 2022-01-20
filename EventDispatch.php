@@ -22,7 +22,7 @@ class EventDispatch extends Component implements EventDispatcherInterface
 	 */
 	public function dispatch(object $event): object
 	{
-		$lists = $this->eventProvider->getListenersForEvent($event);
+		$lists = $this->getEventProvider()->getListenersForEvent($event);
 		foreach ($lists as $listener) {
 			/** @var Struct $list */
 			$listener($event);

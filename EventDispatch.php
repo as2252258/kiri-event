@@ -2,8 +2,8 @@
 
 namespace Kiri\Events;
 
-use Kiri\Abstracts\Component;
 use Kiri;
+use Kiri\Abstracts\Component;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -18,6 +18,17 @@ class EventDispatch extends Component implements EventDispatcherInterface
 
 
 	/**
+	 * @param EventProvider $eventProvider
+	 * @param array $config
+	 * @throws \Exception
+	 */
+	public function __construct(public EventProvider $eventProvider, array $config = [])
+	{
+		parent::__construct($config);
+	}
+
+
+	/**
 	 * @param object $event
 	 * @return object
 	 * @throws ContainerExceptionInterface
@@ -25,7 +36,7 @@ class EventDispatch extends Component implements EventDispatcherInterface
 	 */
 	public function dispatch(object $event): object
 	{
-		$lists = $this->getEventProvider()->getListenersForEvent($event);
+		$lists = $this->eventProvider->getListenersForEvent($event);
 		foreach ($lists as $listener) {
 			/** @var Struct $list */
 			$listener($event);

@@ -39,7 +39,11 @@ class EventDispatch extends Component implements EventDispatcherInterface
 		$lists = $this->eventProvider->getListenersForEvent($event);
 		foreach ($lists as $listener) {
 			/** @var Struct $list */
-			$listener($event);
+            try {
+                $listener($event);
+            }catch (\Throwable $exception) {
+                $this->logger->addError($exception);
+            }
 			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
 				break;
 			}

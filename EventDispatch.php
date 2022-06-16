@@ -42,7 +42,7 @@ class EventDispatch extends Component implements EventDispatcherInterface
             try {
                 $listener($event);
             }catch (\Throwable $exception) {
-                $this->logger->addError($exception);
+                $this->logger->error($exception->getMessage(), [$exception]);
             }
 			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
 				break;

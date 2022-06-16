@@ -32,11 +32,15 @@ class EventProvider implements ListenerProviderInterface
 
 	/**
 	 * @param string $event
-	 * @param callable $handler
+	 * @param array|\Closure|string $handler
 	 * @param int $zOrder
+	 * @throws \Exception
 	 */
-	public function on(string $event, callable $handler, int $zOrder = 1)
+	public function on(string $event, array|\Closure|string $handler, int $zOrder = 1)
 	{
+		if (is_string($handler) && !is_callable($handler, true)) {
+			throw new \Exception('Event handler must is execute function.');
+		}
 		$this->_listeners[$event][] = new Struct($event, $handler, $zOrder);
 	}
 
@@ -46,7 +50,7 @@ class EventProvider implements ListenerProviderInterface
 	 * @param callable $handler
 	 * @return void
 	 */
-	public function off(string $event, callable $handler)
+	public function off(string $event, callable $handler): void
 	{
 		$events = $this->_listeners[$event] ?? [];
 

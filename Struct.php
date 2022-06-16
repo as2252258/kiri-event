@@ -12,11 +12,11 @@ class Struct
 
 	public string $event;
 
-	public array|\Closure $listener;
+	public array|\Closure|string $listener;
 
 	public int $priority;
 
-	public function __construct(string $event, callable $listener, int $priority)
+	public function __construct(string $event, array|\Closure|string $listener, int $priority)
 	{
 		$this->event = $event;
 		$this->listener = $listener;

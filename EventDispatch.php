@@ -41,18 +41,9 @@ class EventDispatch extends Component implements EventDispatcherInterface
 			return $event;
 		}
 		$lists->top();
-		
-		$sc = '';
-		
 		while ($lists->valid()) {
 			try {
-				$current = $lists->current();
-				if (is_array($current)) {
-					$sc .= $current[0]::class . '::' . $current[1] . PHP_EOL;
-				} else if (is_string($current)) {
-					$sc .= $current . PHP_EOL;
-				}
-				call_user_func($current, $event);
+				call_user_func($lists->current(), $event);
 			} catch (\Throwable $exception) {
 				$this->logger->error($exception->getMessage(), [$exception]);
 			}
@@ -61,9 +52,6 @@ class EventDispatch extends Component implements EventDispatcherInterface
 			}
 			$lists->next();
 		}
-		
-		$this->logger->error($sc);
-		
 		return $event;
 	}
 

@@ -36,7 +36,6 @@ class EventDispatch extends Component implements EventDispatcherInterface
 	 */
 	public function dispatch(object $event): object
 	{
-		/** @var \SplPriorityQueue $lists */
 		$lists = $this->eventProvider->getListenersForEvent($event);
 		if (!$lists->valid()) {
 			return $event;

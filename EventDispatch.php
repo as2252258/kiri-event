@@ -43,7 +43,8 @@ class EventDispatch extends Component implements EventDispatcherInterface
 		$lists->top();
 		while ($lists->valid()) {
 			try {
-				call_user_func($lists->current(), $event);
+				$current = $lists->current();
+				call_user_func($current, $event);
 			} catch (\Throwable $exception) {
 				$this->logger->error($exception->getMessage(), [$exception]);
 			}

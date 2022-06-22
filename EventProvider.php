@@ -23,7 +23,7 @@ class EventProvider implements ListenerProviderInterface
 	public function getListenersForEvent(object $event): SplPriorityQueue
 	{
 		$queue = new SplPriorityQueue();
-		$queue->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
+		$queue->setExtractFlags(SplPriorityQueue::EXTR_DATA);
 		// TODO: Implement getListenersForEvent() method.
 		foreach ($this->_listeners[get_class($event)] ?? [] as $listener) {
 			$queue->insert($listener->listener, $listener->priority);

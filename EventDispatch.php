@@ -44,6 +44,11 @@ class EventDispatch extends Component implements EventDispatcherInterface
 		while ($lists->valid()) {
 			try {
 				$current = $lists->current();
+				if (is_array($current)) {
+					var_dump($current[0]::class, $current[1]);
+				} else if (is_string($current)) {
+					var_dump($current);
+				}
 				call_user_func($current, $event);
 			} catch (\Throwable $exception) {
 				$this->logger->error($exception->getMessage(), [$exception]);

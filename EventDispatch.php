@@ -36,17 +36,19 @@ class EventDispatch extends Component implements EventDispatcherInterface
 	 */
 	public function dispatch(object $event): object
 	{
+		/** @var \SplPriorityQueue $lists */
 		$lists = $this->eventProvider->getListenersForEvent($event);
-		foreach ($lists as $listener) {
-			/** @var Struct $list */
-            try {
-                $listener($event);
-            }catch (\Throwable $exception) {
-                $this->logger->error($exception->getMessage(), [$exception]);
-            }
+		$lists->top();
+		while ($lists->valid()) {
+			try {
+				call_user_func($lists->current(), $event);
+			} catch (\Throwable $exception) {
+				$this->logger->error($exception->getMessage(), [$exception]);
+			}
 			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
 				break;
 			}
+			$lists->next();
 		}
 		return $event;
 	}

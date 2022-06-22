@@ -4,6 +4,7 @@ namespace Kiri\Events;
 
 
 use Psr\EventDispatcher\ListenerProviderInterface;
+use SplPriorityQueue;
 
 /**
  *
@@ -17,11 +18,12 @@ class EventProvider implements ListenerProviderInterface
 
 	/**
 	 * @param object $event
-	 * @return iterable
+	 * @return SplPriorityQueue
 	 */
-	public function getListenersForEvent(object $event): iterable
+	public function getListenersForEvent(object $event): SplPriorityQueue
 	{
-		$queue = new \SplPriorityQueue();
+		$queue = new SplPriorityQueue();
+		$queue->setExtractFlags(SplPriorityQueue::EXTR_PRIORITY);
 		// TODO: Implement getListenersForEvent() method.
 		foreach ($this->_listeners[get_class($event)] ?? [] as $listener) {
 			$queue->insert($listener->listener, $listener->priority);

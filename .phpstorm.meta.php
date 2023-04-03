@@ -12,6 +12,6 @@ namespace PHPSTORM_META {
 //    override(\make(0), map('@'));
     override(\di(0), map('@'));
     override(\duplicate(0), map('@'));
-    override(Context::getContext(0), map('@'));
+    override(Context::get(0), map('@'));
 
 }

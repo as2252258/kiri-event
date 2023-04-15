@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Kiri\Events;
 
+use Exception;
 use Kiri;
 use Kiri\Abstracts\Component;
 use Psr\Container\ContainerExceptionInterface;
@@ -20,12 +21,11 @@ class EventDispatch extends Component implements EventDispatcherInterface
 
 	/**
 	 * @param EventProvider $eventProvider
-	 * @param array $config
-	 * @throws \Exception
+	 * @throws Exception
 	 */
-	public function __construct(public EventProvider $eventProvider, array $config = [])
+	public function __construct(public EventProvider $eventProvider)
 	{
-		parent::__construct($config);
+		parent::__construct();
 	}
 
 
@@ -46,7 +46,7 @@ class EventDispatch extends Component implements EventDispatcherInterface
 			try {
 				call_user_func($lists->current(), $event);
 			} catch (\Throwable $exception) {
-				$this->logger->error($exception->getMessage(), [$exception]);
+				error($exception->getMessage(), [$exception]);
 			}
 			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
 				break;

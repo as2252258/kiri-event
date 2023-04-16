@@ -20,24 +20,14 @@ class EventDispatch extends Component implements EventDispatcherInterface
 
 
 	/**
-	 * @param EventProvider $eventProvider
-	 * @throws Exception
-	 */
-	public function __construct(public EventProvider $eventProvider)
-	{
-		parent::__construct();
-	}
-
-
-	/**
 	 * @param object $event
 	 * @return object
 	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface
+	 * @throws NotFoundExceptionInterface|\ReflectionException
 	 */
 	public function dispatch(object $event): object
 	{
-		$lists = $this->eventProvider->getListenersForEvent($event);
+		$lists = Kiri::getDi()->get(EventProvider::class)->getListenersForEvent($event);
 		if (!$lists->valid()) {
 			return $event;
 		}

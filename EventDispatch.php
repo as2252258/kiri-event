@@ -36,7 +36,7 @@ class EventDispatch extends Component implements EventDispatcherInterface
 			try {
 				call_user_func($lists->current(), $event);
 			} catch (\Throwable $exception) {
-				error($exception->getMessage(), [$exception]);
+				error($exception);
 			}
 			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
 				break;

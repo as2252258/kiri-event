@@ -10,6 +10,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
+use ReflectionException;
 
 
 /**
@@ -23,26 +24,24 @@ class EventDispatch extends Component implements EventDispatcherInterface
 	 * @param object $event
 	 * @return object
 	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface|\ReflectionException
+	 * @throws NotFoundExceptionInterface|ReflectionException
 	 */
 	public function dispatch(object $event): object
 	{
-		$lists = Kiri::getDi()->get(EventProvider::class)->getListenersForEvent($event);
-		if (!$lists->valid()) {
+		$lists = make(EventProvider::class)->getListenersForEvent($event);
+		if ($lists->isEmpty()) {
 			return $event;
 		}
-		$lists->top();
-		while ($lists->valid()) {
-			try {
-				call_user_func($lists->current(), $event);
-			} catch (\Throwable $exception) {
-				error($exception);
-			}
-			if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
-				break;
-			}
-			$lists->next();
-		}
+        foreach ($lists as $item)  {
+            try {
+                call_user_func($item, $event);
+            } catch (\Throwable $exception) {
+                error($exception);
+            }
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                break;
+            }
+        }
 		return $event;
 	}
 

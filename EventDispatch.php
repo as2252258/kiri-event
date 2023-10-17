@@ -3,14 +3,10 @@ declare(strict_types=1);
 
 namespace Kiri\Events;
 
-use Exception;
 use Kiri;
 use Kiri\Abstracts\Component;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
-use ReflectionException;
 use SplPriorityQueue;
 
 

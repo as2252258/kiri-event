@@ -6,7 +6,10 @@ class TestListener implements EventInterface
 {
 
 
-    public function process()
+    /**
+     * @return void
+     */
+    public function process(): void
     {
         // TODO: Implement process() method.
     }

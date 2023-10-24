@@ -16,6 +16,12 @@ class Struct
 
 	public int $priority;
 
+
+    /**
+     * @param string $event
+     * @param array|\Closure|string $listener
+     * @param int $priority
+     */
 	public function __construct(string $event, array|\Closure|string $listener, int $priority)
 	{
 		$this->event = $event;

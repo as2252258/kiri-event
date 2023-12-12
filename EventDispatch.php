@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Kiri\Events;
 
-use Kiri;
 use Kiri\Abstracts\Component;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
